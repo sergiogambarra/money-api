@@ -25,6 +25,7 @@ public class Entry {
     private LocalDate payDate;
 
     @NotNull
+    @Column(name = "value_")
     private BigDecimal value;
 
     private String note;
