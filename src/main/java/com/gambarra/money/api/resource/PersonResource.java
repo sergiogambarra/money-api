@@ -1,12 +1,10 @@
 package com.gambarra.money.api.resource;
 
 import com.gambarra.money.api.event.ResourceCreatedEvent;
-import com.gambarra.money.api.model.Entry;
 import com.gambarra.money.api.model.Person;
-import com.gambarra.money.api.repository.filter.EntryFilter;
+import com.gambarra.money.api.repository.PersonRepository;
 import com.gambarra.money.api.repository.filter.PersonFilter;
 import com.gambarra.money.api.service.PersonService;
-import com.gambarra.money.api.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
