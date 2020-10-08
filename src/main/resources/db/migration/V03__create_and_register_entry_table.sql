@@ -12,6 +12,7 @@ CREATE TABLE entry (
 	FOREIGN KEY (person_id) REFERENCES person(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
 INSERT INTO entry (description, due_date, pay_date, value, note, type, category_id, person_id) values ('Salário mensal', '2017-06-10', null, 6500.00, 'Distribuição de lucros', 'RECEITA', 1, 1);
 INSERT INTO entry (description, due_date, pay_date, value, note, type, category_id, person_id) values ('Bahamas', '2017-02-10', '2017-02-10', 100.32, null, 'DESPESA', 2, 2);
 INSERT INTO entry (description, due_date, pay_date, value, note, type, category_id, person_id) values ('Top Club', '2017-06-10', null, 120, null, 'RECEITA', 3, 3);
