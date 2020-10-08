@@ -12,13 +12,13 @@ CREATE TABLE person (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-INSERT INTO person (name, street, number, complement, neighborhood, zip, city, state, active) values ('Sergio Gambarra da Silva', 'Av. Edgar Pires de Castro', '2520', 'Casa 66', 'Hipica', '91786299', 'Porto Alegre', 'RS', 1);
-INSERT INTO person (name, street, number, complement, neighborhood, zip, city, state, active) values ('João da Silva', 'Av. Cavalhada', '3000', 'Casa 12', 'Cavalhada', '99999999', 'Porto Alegre', 'RS', 1);
-INSERT INTO person (name, street, number, complement, neighborhood, zip, city, state, active) values ('Daniel Silveira da Silva', 'Estrada Costa Gama', '876', null, 'Aberta dos Morros', '99876345', 'Porto Alegre', 'RS', 1);
-INSERT INTO person (name, street, number, complement, neighborhood, zip, city, state, active) values ('Robson João de Matos', 'Av. Paulista', '54320', 'Sala 333', 'Morumbi', '33386299', 'São Paulo', 'SP', 1);
-INSERT INTO person (name, street, number, complement, neighborhood, zip, city, state, active) values ('Gustavo Fring', 'Av. Brasil', '520', null, 'Botafogo', '55586299', 'Rio de Janeiro', 'RJ', 0);
-INSERT INTO person (name, street, number, complement, neighborhood, zip, city, state, active) values ('Ana Luiza Souza', 'Av. Silveira', '3520', 'Casa 33', 'São João', '97786299', 'Porto Alegre', 'RS', 1);
-INSERT INTO person (name, street, number, complement, neighborhood, zip, city, state, active) values ('Ernesto Che Guevara', 'Rua Uruguai', '2233', 'Sala 66', 'Centro', '96796299', 'Porto Alegre', 'RS', 0);
-INSERT INTO person (name, street, number, complement, neighborhood, zip, city, state, active) values ('Daniela Santos', 'Rua Argentina', '4433', 'Sala 55', 'São Pedro', '96962655', 'Porto Alegre', 'RS', 0);
-INSERT INTO person (name, street, number, complement, neighborhood, zip, city, state, active) values ('Ana Carolina', 'Rua Jary', '6833', 'Ap 436', 'Higienopolis', '94356266', 'Porto Alegre', 'RS', 1);
-INSERT INTO person (name, street, number, complement, neighborhood, zip, city, state, active) values ('Dorivaldo Junior', 'Rua Antonio Amaro', '233', null, 'Campo Novo', '96796299', 'Porto Alegre', 'RS', 1);
+INSERT INTO pessoa (name, street, number, complement, neighborhood, zip, city, state, active) values ('João Silva', 'Rua do Abacaxi', '10', null, 'Brasil', '38.400-121', 'Uberlândia', 'MG', true);
+INSERT INTO pessoa (name, street, number, complement, neighborhood, zip, city, state, active) values ('Maria Rita', 'Rua do Sabiá', '110', 'Apto 101', 'Colina', '11.400-121', 'Ribeirão Preto', 'SP', true);
+INSERT INTO pessoa (name, street, number, complement, neighborhood, zip, city, state, active) values ('Pedro Santos', 'Rua da Bateria', '23', null, 'Morumbi', '54.212-121', 'Goiânia', 'GO', true);
+INSERT INTO pessoa (name, street, number, complement, neighborhood, zip, city, state, active) values ('Ricardo Pereira', 'Rua do Motorista', '123', 'Apto 302', 'Aparecida', '38.400-12', 'Salvador', 'BA', true);
+INSERT INTO pessoa (name, street, number, complement, neighborhood, zip, city, state, active) values ('Josué Mariano', 'Av Rio Branco', '321', null, 'Jardins', '56.400-121', 'Natal', 'RN', true);
+INSERT INTO pessoa (name, street, number, complement, neighborhood, zip, city, state, active) values ('Pedro Barbosa', 'Av Brasil', '100', null, 'Tubalina', '77.400-121', 'Porto Alegre', 'RS', true);
+INSERT INTO pessoa (name, street, number, complement, neighborhood, zip, city, state, active) values ('Henrique Medeiros', 'Rua do Sapo', '1120', 'Apto 201', 'Centro', '12.400-121', 'Rio de Janeiro', 'RJ', true);
+INSERT INTO pessoa (name, street, number, complement, neighborhood, zip, city, state, active) values ('Carlos Santana', 'Rua da Manga', '433', null, 'Centro', '31.400-121', 'Belo Horizonte', 'MG', true);
+INSERT INTO pessoa (name, street, number, complement, neighborhood, zip, city, state, active) values ('Leonardo Oliveira', 'Rua do Músico', '566', null, 'Segismundo Pereira', '38.400-00', 'Uberlândia', 'MG', true);
+INSERT INTO pessoa (name, street, number, complement, neighborhood, zip, city, state, active) values ('Isabela Martins', 'Rua da Terra', '1233', 'Apto 10', 'Vigilato', '99.400-121', 'Manaus', 'AM', true);
