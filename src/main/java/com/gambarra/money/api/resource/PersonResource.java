@@ -1,11 +1,16 @@
 package com.gambarra.money.api.resource;
 
 import com.gambarra.money.api.event.ResourceCreatedEvent;
+import com.gambarra.money.api.model.Entry;
 import com.gambarra.money.api.model.Person;
+import com.gambarra.money.api.repository.filter.EntryFilter;
+import com.gambarra.money.api.repository.filter.PersonFilter;
 import com.gambarra.money.api.service.PersonService;
 import com.gambarra.money.api.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,9 +35,9 @@ public class PersonResource {
     private ApplicationEventPublisher publisher;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
-    public List<Person> index() {
-        return personRepository.findAll();
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+    public Page<Person> search(PersonFilter personFilter, Pageable pageable) {
+        return personRepository.filter(personFilter, pageable);
     }
 
 

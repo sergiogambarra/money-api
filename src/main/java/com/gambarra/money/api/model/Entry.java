@@ -25,7 +25,7 @@ public class Entry {
     private LocalDate payDate;
 
     @NotNull
-    @Column(name = "value_")
+    @Column(name = "value")
     private BigDecimal value;
 
     private String note;
@@ -36,7 +36,7 @@ public class Entry {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
     @NotNull

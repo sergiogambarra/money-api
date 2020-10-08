@@ -62,13 +62,12 @@ public class EntryResource {
 
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
-    public ResponseEntity<Entry> create(@Valid @RequestBody Entry entry, HttpServletResponse response) {
+    public ResponseEntity<Entry> criar(@Valid @RequestBody Entry entry, HttpServletResponse response) {
         Entry entrySaved = entryService.save(entry);
-
         publisher.publishEvent(new ResourceCreatedEvent(this, response, entrySaved.getId()));
-
         return ResponseEntity.status(HttpStatus.CREATED).body(entrySaved);
     }
+
 
     @ExceptionHandler({PersonNonexistentOrInactiveException.class })
     public ResponseEntity<Object> handlePersonNonexistentOrInactiveException(PersonNonexistentOrInactiveException ex){

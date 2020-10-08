@@ -27,18 +27,18 @@ public class EntryRepositoryImpl implements EntryRepositoryQuery {
     private EntityManager manager;
 
     @Override
-    public Page<Entry> filter(EntryFilter EntryFilter, Pageable pageable) {
+    public Page<Entry> filter(EntryFilter entryFilter, Pageable pageable) {
         CriteriaBuilder builder = manager.getCriteriaBuilder();
         CriteriaQuery<Entry> criteria = builder.createQuery(Entry.class);
         Root<Entry> root = criteria.from(Entry.class);
 
-        Predicate[] predicates = criarRestricoes(EntryFilter, builder, root);
+        Predicate[] predicates = criarRestricoes(entryFilter, builder, root);
         criteria.where(predicates);
 
         TypedQuery<Entry> query = manager.createQuery(criteria);
         adicionarRestricoesDePaginacao(query, pageable);
 
-        return new PageImpl<>(query.getResultList(), pageable, total(EntryFilter));
+        return new PageImpl<>(query.getResultList(), pageable, total(entryFilter));
     }
 
 
@@ -64,23 +64,23 @@ public class EntryRepositoryImpl implements EntryRepositoryQuery {
         return new PageImpl<>(query.getResultList(), pageable, total(EntryFilter));
     }
 
-    private Predicate[] criarRestricoes(EntryFilter EntryFilter, CriteriaBuilder builder,
+    private Predicate[] criarRestricoes(EntryFilter entryFilter, CriteriaBuilder builder,
                                         Root<Entry> root) {
         List<Predicate> predicates = new ArrayList<>();
 
-        if (!StringUtils.isEmpty(EntryFilter.getDescription())) {
+        if (!StringUtils.isEmpty(entryFilter.getDescription())) {
             predicates.add(builder.like(
-                    builder.lower(root.get(Entry_.description)), "%" + EntryFilter.getDescription().toLowerCase() + "%"));
+                    builder.lower(root.get(Entry_.description)), "%" + entryFilter.getDescription().toLowerCase() + "%"));
         }
 
-        if (EntryFilter.getDueDateFrom() != null) {
+        if (entryFilter.getDueDateFrom() != null) {
             predicates.add(
-                    builder.greaterThanOrEqualTo(root.get(Entry_.dueDate), EntryFilter.getDueDateFrom()));
+                    builder.greaterThanOrEqualTo(root.get(Entry_.dueDate), entryFilter.getDueDateFrom()));
         }
 
-        if (EntryFilter.getDueDateTo() != null) {
+        if (entryFilter.getDueDateTo() != null) {
             predicates.add(
-                    builder.lessThanOrEqualTo(root.get(Entry_.dueDate), EntryFilter.getDueDateTo()));
+                    builder.lessThanOrEqualTo(root.get(Entry_.dueDate), entryFilter.getDueDateTo()));
         }
 
         return predicates.toArray(new Predicate[predicates.size()]);
