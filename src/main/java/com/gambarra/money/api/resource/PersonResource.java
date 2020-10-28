@@ -42,7 +42,7 @@ public class PersonResource {
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
     public Object show(@PathVariable Long id){
         Optional<Person> person = personRepository.findById(id);
-        return person.isPresent() ? ResponseEntity.ok(person) : ResponseEntity.notFound().build();
+        return person.isPresent() ? ResponseEntity.ok(person.get()) : ResponseEntity.notFound().build();
     }
 
     @PostMapping

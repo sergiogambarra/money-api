@@ -1,6 +1,7 @@
 package com.gambarra.money.api.resource;
 
 import com.gambarra.money.api.exceptionhandler.MoneyExceptionHandler;
+import com.gambarra.money.api.model.Person;
 import com.gambarra.money.api.repository.EntryRepository;
 import com.gambarra.money.api.repository.filter.EntryFilter;
 import com.gambarra.money.api.repository.projection.EntryResume;
@@ -57,15 +58,25 @@ public class EntryResource {
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
     public Object show(@PathVariable Long id){
         Optional<Entry> entry = entryRepository.findById(id);
-        return entry.isPresent() ? ResponseEntity.ok(entry) : ResponseEntity.notFound().build();
+        return entry.isPresent() ? ResponseEntity.ok(entry.get()) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
-    public ResponseEntity<Entry> criar(@Valid @RequestBody Entry entry, HttpServletResponse response) {
+    public ResponseEntity<Entry> create(@Valid @RequestBody Entry entry, HttpServletResponse response) {
         Entry entrySaved = entryService.save(entry);
         publisher.publishEvent(new ResourceCreatedEvent(this, response, entrySaved.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(entrySaved);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Entry> update(@Valid @RequestBody Entry entry, @PathVariable Long id) {
+        try {
+            Entry entrySaved = entryService.update(id, entry);
+            return ResponseEntity.ok(entrySaved);
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
 

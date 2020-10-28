@@ -43,7 +43,7 @@ public class CategoryResource {
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA') and #oauth2.hasScope('read')")
     public Object show(@PathVariable Long id){
         Optional<Category> category = categoryRepository.findById(id);
-        return category.isPresent() ? ResponseEntity.ok(category) : ResponseEntity.notFound().build();
+        return category.isPresent() ? ResponseEntity.ok(category.get()) : ResponseEntity.notFound().build();
     }
     
 }
