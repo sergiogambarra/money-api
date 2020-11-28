@@ -18,7 +18,7 @@ public class TokenResource {
     @Autowired
     private MoneyApiProperty moneyApiProperty;
 
-    @DeleteMapping("/revoque")
+    @DeleteMapping("/revoke")
     public void revoke(HttpServletRequest req, HttpServletResponse res){
         Cookie cookie = new Cookie("refreshToken", null);
         cookie.setHttpOnly(true);

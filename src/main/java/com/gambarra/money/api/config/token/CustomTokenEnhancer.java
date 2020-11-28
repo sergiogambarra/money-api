@@ -1,14 +1,14 @@
-package com.example.algamoney.api.config.token;
+package com.gambarra.money.api.config.token;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import com.gambarra.money.api.security.SystemUser;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 
+import com.gambarra.money.api.security.SystemUser;
 
 public class CustomTokenEnhancer implements TokenEnhancer {
 
@@ -17,7 +17,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
         SystemUser systemUser = (SystemUser) authentication.getPrincipal();
 
         Map<String, Object> addInfo = new HashMap<>();
-        addInfo.put("nome", systemUser.getUser().getName());
+        addInfo.put("name", systemUser.getUser().getName());
 
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(addInfo);
         return accessToken;
