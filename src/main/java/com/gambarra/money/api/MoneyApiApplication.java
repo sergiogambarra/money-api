@@ -21,7 +21,7 @@ public class MoneyApiApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/*").allowedOrigins("https://money-ui-nzed6f3iw.vercel.app");
+				registry.addMapping("/*").allowedOrigins("https://money-ui.vercel.app");
 			}
 		};
 	}
