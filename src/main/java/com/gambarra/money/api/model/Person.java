@@ -1,9 +1,12 @@
 package com.gambarra.money.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -22,6 +25,11 @@ public class Person {
 
     @NotNull
     private Boolean active;
+
+    @JsonIgnoreProperties("person")
+    @Valid
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Contact> contacts;
 
     public Long getId() {
         return id;
@@ -53,6 +61,14 @@ public class Person {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
     }
 
     @JsonIgnore

@@ -15,11 +15,20 @@ public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
+    public Person save(Person person){
+        person.getContacts().forEach(c -> c.setPerson(person));
+        return personRepository.save(person);
+    }
+
     public Person update(Person person, Long id){
 
         Person personSaved = getPersonById(id);
 
-        BeanUtils.copyProperties(person, personSaved, "id");
+        personSaved.getContacts().clear();
+        personSaved.getContacts().addAll(person.getContacts());
+        personSaved.getContacts().forEach(c -> c.setPerson(personSaved));
+
+        BeanUtils.copyProperties(person, personSaved, "id", "contacts");
         return personRepository.save(personSaved);
     }
 

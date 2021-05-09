@@ -1,5 +1,6 @@
 package com.gambarra.money.api.repository.entry;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +12,16 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.gambarra.money.api.model.*;
-import com.gambarra.money.api.repository.entry.EntryRepositoryQuery;
+import com.gambarra.money.api.dto.EntryStatisticByDay;
+import com.gambarra.money.api.dto.EntryStatisticCategory;
+import com.gambarra.money.api.dto.EntryStatisticPerson;
+import com.gambarra.money.api.model.Person_;
+import com.gambarra.money.api.model.Entry;
+import com.gambarra.money.api.model.Entry_;
+import com.gambarra.money.api.model.Category_;
 import com.gambarra.money.api.repository.filter.EntryFilter;
 import com.gambarra.money.api.repository.projection.EntryResume;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +32,90 @@ public class EntryRepositoryImpl implements EntryRepositoryQuery {
 
     @PersistenceContext
     private EntityManager manager;
+
+    @Override
+    public List<EntryStatisticPerson> byPerson(LocalDate start, LocalDate end) {
+        CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+
+        CriteriaQuery<EntryStatisticPerson> criteriaQuery = criteriaBuilder.
+                createQuery(EntryStatisticPerson.class);
+
+        Root<Entry> root = criteriaQuery.from(Entry.class);
+
+        criteriaQuery.select(criteriaBuilder.construct(EntryStatisticPerson.class,
+                root.get(Entry_.type),
+                root.get(Entry_.person),
+                criteriaBuilder.sum(root.get(Entry_.value))));
+
+        criteriaQuery.where(
+                criteriaBuilder.greaterThanOrEqualTo(root.get(Entry_.dueDate),
+                        start),
+                criteriaBuilder.lessThanOrEqualTo(root.get(Entry_.dueDate),
+                        end));
+
+        criteriaQuery.groupBy(root.get(Entry_.type),
+                root.get(Entry_.person));
+
+        TypedQuery<EntryStatisticPerson> typedQuery = manager
+                .createQuery(criteriaQuery);
+
+        return typedQuery.getResultList();
+    }
+
+    @Override
+    public List<EntryStatisticCategory> byCategory(LocalDate monthReference) {
+        CriteriaBuilder builder = manager.getCriteriaBuilder();
+        CriteriaQuery<EntryStatisticCategory> criteria = builder.createQuery(EntryStatisticCategory.class);
+
+        Root<Entry> root = criteria.from(Entry.class);
+
+        criteria.select(builder.construct(EntryStatisticCategory.class, root.get(Entry_.category),
+                builder.sum(root.get(Entry_.value))));
+
+        LocalDate firstDay = monthReference.withDayOfMonth(1);
+        LocalDate lastDay = monthReference.withDayOfMonth(monthReference.lengthOfMonth());
+
+        criteria.where(
+          builder.greaterThanOrEqualTo(root.get(Entry_.dueDate),
+                  firstDay),
+            builder.lessThanOrEqualTo(root.get(Entry_.dueDate),
+                    lastDay));
+
+        criteria.groupBy(root.get(Entry_.category));
+
+        TypedQuery<EntryStatisticCategory> typedQuery = manager.createQuery(criteria);
+
+        return typedQuery.getResultList();
+    }
+
+    @Override
+    public List<EntryStatisticByDay> byDay(LocalDate monthReference) {
+        CriteriaBuilder builder = manager.getCriteriaBuilder();
+
+        CriteriaQuery<EntryStatisticByDay> criteria = builder.createQuery(EntryStatisticByDay.class);
+
+        Root<Entry> root = criteria.from(Entry.class);
+
+        criteria.select(builder.construct(EntryStatisticByDay.class,
+                root.get(Entry_.type),
+                root.get(Entry_.dueDate),
+                builder.sum(root.get(Entry_.value))));
+
+        LocalDate firstDay = monthReference.withDayOfMonth(1);
+        LocalDate lastDay = monthReference.withDayOfMonth(monthReference.lengthOfMonth());
+
+        criteria.where(
+                builder.greaterThanOrEqualTo(root.get(Entry_.dueDate),
+                        firstDay),
+                builder.lessThanOrEqualTo(root.get(Entry_.dueDate),
+                        lastDay));
+
+        criteria.groupBy(root.get(Entry_.type), root.get(Entry_.dueDate));
+
+        TypedQuery<EntryStatisticByDay> typedQuery = manager.createQuery(criteria);
+
+        return typedQuery.getResultList();
+    }
 
     @Override
     public Page<Entry> filter(EntryFilter entryFilter, Pageable pageable) {

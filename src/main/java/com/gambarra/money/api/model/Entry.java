@@ -1,11 +1,16 @@
 package com.gambarra.money.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.gambarra.money.api.repository.listener.EntryAttachmentListener;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@EntityListeners(EntryAttachmentListener.class)
 @Entity
 @Table(name = "entry")
 public class Entry {
@@ -39,10 +44,21 @@ public class Entry {
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
+    @JsonIgnoreProperties("contacts")
     @NotNull
     @ManyToOne
     @JoinColumn(name = "person_id")
     private Person person;
+
+    private String attachment;
+
+    @Transient
+    private String urlAttachment;
+
+    @JsonIgnore
+    public boolean isReceita(){
+        return TypeEntry.RECEITA.equals(this.type);
+    }
 
     public Long getId() {
         return id;
@@ -127,5 +143,21 @@ public class Entry {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public String getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(String attachment) {
+        this.attachment = attachment;
+    }
+
+    public String getUrlAttachment() {
+        return urlAttachment;
+    }
+
+    public void setUrlAttachment(String urlAttachment) {
+        this.urlAttachment = urlAttachment;
     }
 }

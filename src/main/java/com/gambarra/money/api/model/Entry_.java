@@ -11,7 +11,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Entry_ {
 
 	public static volatile SingularAttribute<Entry, Long> id;
-	public static volatile SingularAttribute<Entry, String> note;
+	public static volatile SingularAttribute<Entry, String> observation;
 	public static volatile SingularAttribute<Entry, TypeEntry> type;
 	public static volatile SingularAttribute<Entry, LocalDate> payDate;
 	public static volatile SingularAttribute<Entry, Person> person;
